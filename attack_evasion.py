@@ -1,9 +1,7 @@
 """Red team, attack 1 (OWASP ML01): FGSM and PGD adversarial test sets against the baseline, made with ART."""
-import pickle
-
 from art.attacks.evasion import FastGradientMethod, ProjectedGradientDescent
 
-from common import DATA, art_classifier, evaluate, load_mnist, load_model, save_results, set_seed
+from common import art_classifier, evaluate, load_mnist, load_model, save_arrays, save_results, set_seed
 
 EPSILONS = [0.1, 0.2, 0.3]
 
@@ -29,6 +27,5 @@ if __name__ == "__main__":
             out[f"{name}_{eps}"] = evaluate(model, x_adv, y_test)
             print(f"baseline {name} eps={eps}: acc {out[f'{name}_{eps}']['accuracy']:.4f}", flush=True)
     # Keep the adversarial test sets so the defended model can be tested on the same images.
-    with open(DATA / "adv_test.pkl", "wb") as f:
-        pickle.dump(adv_sets, f)
+    save_arrays("adv_test", **adv_sets)
     save_results("baseline_evasion", out)

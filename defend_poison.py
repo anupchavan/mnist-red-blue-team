@@ -1,13 +1,12 @@
 """Blue team, defence 2: activation clustering (Chen et al.) to find and remove backdoor samples, then retrain."""
-import pickle
-
 import numpy as np
 import torch
 from sklearn.cluster import KMeans
 from sklearn.decomposition import FastICA
 
 from attack_poison import TARGET, triggered_test
-from common import DATA, evaluate, load_mnist, load_model, make_model, save_model, save_results, set_seed, train
+from common import (evaluate, load_arrays, load_mnist, load_model, make_model, save_model, save_results, set_seed,
+                    train)
 
 SIZE_THRESHOLD = 0.35  # a cluster holding less than 35% of its class is treated as poison
 
@@ -36,8 +35,7 @@ def activation_clustering(model, x, y):
 
 if __name__ == "__main__":
     set_seed()
-    with open(DATA / "poisoned_train.pkl", "rb") as f:
-        d = pickle.load(f)
+    d = load_arrays("poisoned_train")
     xp, yp, poison_idx = d["x"], d["y"], d["poison_idx"]
     x_test, y_test = load_mnist(train=False)
     x_trig, y_trig = triggered_test(x_test, y_test)

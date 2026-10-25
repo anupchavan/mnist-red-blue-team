@@ -1,11 +1,9 @@
 """Red team, attack 2 (OWASP ML02): BadNets-style backdoor poisoning of the training set, made with ART."""
-import pickle
-
 import numpy as np
 from art.attacks.poisoning import PoisoningAttackBackdoor
 from art.attacks.poisoning.perturbations import add_pattern_bd
 
-from common import DATA, evaluate, load_mnist, make_model, save_model, save_results, set_seed, train
+from common import evaluate, load_mnist, make_model, save_arrays, save_model, save_results, set_seed, train
 
 TARGET = 0
 RATES = [0.005, 0.01, 0.05]
@@ -45,6 +43,5 @@ if __name__ == "__main__":
         print(f"poison rate {rate}: clean acc {out[str(rate)]['clean']['accuracy']:.4f} ASR {asr:.4f}", flush=True)
         if rate == 0.01:
             save_model(model, "poisoned")
-            with open(DATA / "poisoned_train.pkl", "wb") as f:
-                pickle.dump({"x": xp, "y": yp, "poison_idx": idx}, f)
+            save_arrays("poisoned_train", x=xp, y=yp, poison_idx=idx)
     save_results("poisoning", out)

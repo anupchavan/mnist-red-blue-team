@@ -1,0 +1,62 @@
+                   
+                   
+┌─────────────────┐
+│ 6 Code Findings │
+└─────────────────┘
+                     
+    attack_evasion.py
+    ❯❱ python.lang.security.deserialization.pickle.avoid-pickle
+          ❰❰ Blocking ❱❱
+          Avoid using `pickle`, which is known to lead to code execution vulnerabilities. When unpickling, the
+          serialized data could be manipulated to run arbitrary code. Instead, consider serializing the       
+          relevant data as JSON or a similar text-based serialization format.                                 
+          Details: https://sg.run/OPwB                                                                        
+                                                                                                              
+           33┆ pickle.dump(adv_sets, f)
+                    
+    attack_poison.py
+    ❯❱ python.lang.security.deserialization.pickle.avoid-pickle
+          ❰❰ Blocking ❱❱
+          Avoid using `pickle`, which is known to lead to code execution vulnerabilities. When unpickling, the
+          serialized data could be manipulated to run arbitrary code. Instead, consider serializing the       
+          relevant data as JSON or a similar text-based serialization format.                                 
+          Details: https://sg.run/OPwB                                                                        
+                                                                                                              
+           49┆ pickle.dump({"x": xp, "y": yp, "poison_idx": idx}, f)
+                      
+    defend_advtrain.py
+    ❯❱ python.lang.security.deserialization.pickle.avoid-pickle
+          ❰❰ Blocking ❱❱
+          Avoid using `pickle`, which is known to lead to code execution vulnerabilities. When unpickling, the
+          serialized data could be manipulated to run arbitrary code. Instead, consider serializing the       
+          relevant data as JSON or a similar text-based serialization format.                                 
+          Details: https://sg.run/OPwB                                                                        
+                                                                                                              
+           22┆ adv_sets = pickle.load(f)
+                    
+    defend_poison.py
+    ❯❱ python.lang.security.deserialization.pickle.avoid-pickle
+          ❰❰ Blocking ❱❱
+          Avoid using `pickle`, which is known to lead to code execution vulnerabilities. When unpickling, the
+          serialized data could be manipulated to run arbitrary code. Instead, consider serializing the       
+          relevant data as JSON or a similar text-based serialization format.                                 
+          Details: https://sg.run/OPwB                                                                        
+                                                                                                              
+           40┆ d = pickle.load(f)
+            
+    serve.py
+    ❯❱ python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host
+          ❰❰ Blocking ❱❱
+          Running flask app with host 0.0.0.0 could expose the server publicly.
+          Details: https://sg.run/eLby                                         
+                                                                               
+           31┆ app.run(host="0.0.0.0", port=5000, debug=True)
+   
+    ❯❱ python.flask.security.audit.debug-enabled.debug-enabled
+          ❰❰ Blocking ❱❱
+          Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will   
+          leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug'
+          using system environment variables.                                                                 
+          Details: https://sg.run/dKrd                                                                        
+                                                                                                              
+           31┆ app.run(host="0.0.0.0", port=5000, debug=True)
