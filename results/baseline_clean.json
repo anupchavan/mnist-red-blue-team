@@ -126,8 +126,8 @@
  ],
  "n": 10000,
  "timing": {
-  "ms_per_image_batch1": 0.20838395488681272,
-  "images_per_s_batch1000": 11285.726382911382,
+  "ms_per_image_batch1": 0.20033250009873882,
+  "images_per_s_batch1000": 11002.05326069602,
   "threads": 6
  }
 }

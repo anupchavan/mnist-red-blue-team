@@ -10,7 +10,7 @@ A small PyTorch CNN for MNIST, two attacks on it and two defences, for the Secur
 | `attack_evasion.py` | OWASP ML01: FGSM and PGD adversarial test sets with ART, eps 0.1 / 0.2 / 0.3 |
 | `attack_poison.py` | OWASP ML02: backdoor poisoning with ART (trigger in the bottom-right corner, target label 0) |
 | `defend_advtrain.py` | Adversarial training (half clean, half PGD in every batch), tested on transfer and white-box attacks |
-| `defend_poison.py` | Activation clustering to find and drop poisoned training images, then retraining |
+| `defend_poison.py` | Activation clustering (ICA and PCA variants) to find and drop poisoned training images, then retraining |
 | `serve.py` | Flask API: `POST /predict` with an `image` form field, returns `{"digit": d}` |
 | `sast/` | Bandit, Semgrep and pip-audit reports before and after the fixes, and `run_sast.sh` |
 | `results/` | JSON with every metric the report quotes |
