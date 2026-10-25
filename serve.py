@@ -3,6 +3,7 @@ import hashlib
 import io
 import logging
 import os
+import warnings
 
 import numpy as np
 import torch
@@ -11,7 +12,9 @@ from PIL import Image, UnidentifiedImageError
 
 from common import load_model
 
-Image.MAX_IMAGE_PIXELS = 1_000_000  # refuse decompression bombs before decoding
+# Refuse decompression bombs before decoding. Pillow only warns between 1x and 2x the limit, so make that an error too.
+Image.MAX_IMAGE_PIXELS = 1_000_000
+warnings.simplefilter("error", Image.DecompressionBombWarning)
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 1 << 20  # 1 MB per request
@@ -30,7 +33,7 @@ def to_tensor(data):
         if img.format not in ("PNG", "JPEG"):
             raise BadInput("only PNG or JPEG images are accepted")
         img = img.convert("L").resize((28, 28))
-    except (UnidentifiedImageError, Image.DecompressionBombError, OSError) as e:
+    except (UnidentifiedImageError, Image.DecompressionBombError, Image.DecompressionBombWarning, OSError) as e:
         raise BadInput("not a readable image") from e
     x = np.asarray(img, dtype=np.float32)[None, None] / 255.0
     return torch.from_numpy(x)
