@@ -27,4 +27,4 @@ python serve.py         # API on 127.0.0.1:5000 (set MNIST_API_HOST to change)
 Generated datasets (`data/*.npz`) and models (`models/*.pt`) are not committed; `run_all.sh` recreates them.
 Each one is written with a `.sha256` file and checked before it is loaded.
 
-The first commit is the code as first written; the second commit holds the SAST fixes.
+The first commit is the code as first written; the second commit holds the SAST fixes, and a later commit tightens the image-size limit in `serve.py`.
