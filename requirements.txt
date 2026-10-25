@@ -1,0 +1,7 @@
+torch==2.14.1
+torchvision==0.29.1
+adversarial-robustness-toolbox==1.20.1
+scikit-learn
+numpy
+flask
+pillow
