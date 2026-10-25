@@ -28,3 +28,23 @@ Generated datasets (`data/*.npz`) and models (`models/*.pt`) are not committed; 
 Each one is written with a `.sha256` file and checked before it is loaded.
 
 The first commit is the code as first written; the second commit holds the SAST fixes, and a later commit tightens the image-size limit in `serve.py`.
+
+## Experiment Results Analysis
+
+The repository includes `analyze_results.py`, a utility for consolidating saved experiment metrics and checking their internal consistency.
+
+### Run
+
+Execute from the repository root:
+
+```bash
+python analyze_results.py
+```
+
+The script reads the existing experiment result JSON files and generates:
+
+- `results/summary_metrics.csv` — consolidated metrics from the saved experiments.
+- `results/summary_report.md` — a Markdown summary of the available results and consistency checks.
+- `results/robustness_comparison.svg` — a plot comparing recorded model accuracy under selected evasion attacks.
+
+The script checks available confusion-matrix totals and derived accuracies against the saved metrics. These checks validate consistency in the recorded results; they do not independently reproduce model training or attack experiments.
